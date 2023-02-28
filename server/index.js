@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-const db = require('./schemas/mongo.js');
+const db = require('./schemas/postgres.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
