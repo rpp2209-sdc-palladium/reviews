@@ -11,6 +11,17 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+// just playing around here
+app.get('/reviews', (req, res) => {
+  console.log('primaryKey', req.body.primaryKey);
+  // grab all data from provided primary key
+  // cannot access reviews.reviews_data...says there is no relation that exists
+  db.query(`SELECT * FROM "reviews_data" WHERE id = ${req.body.primaryKey};`)
+    .then((results) => {
+      console.log('results');
+    })
+})
+
 app.listen(3000, () => {
   console.log('Listening on port 3000!');
 });
