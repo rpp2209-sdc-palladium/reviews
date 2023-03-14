@@ -16,9 +16,9 @@ app.get('/reviews', (req, res) => {
   console.log('primaryKey', req.body.primaryKey);
   // grab all data from provided primary key
   // cannot access reviews.reviews_data...says there is no relation that exists
-  db.query(`SELECT * FROM "reviews_data" WHERE id = ${req.body.primaryKey};`)
+  db.query(`SELECT * FROM reviews WHERE id = ${req.body.primaryKey};`)
     .then((results) => {
-      console.log('results');
+      console.log('results', results);
     })
 })
 

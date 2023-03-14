@@ -1,4 +1,4 @@
-CREATE TABLE public.reviews_data (
+CREATE TABLE reviews (
   id BIGINT PRIMARY KEY,
   product_id BIGINT NOT NULL,
   rating INT NOT NULL,
@@ -13,6 +13,6 @@ CREATE TABLE public.reviews_data (
   helpfulness INT NOT NULL
 );
 
-copy public.reviews_data
+copy reviews
 from '/Users/maddiesime/Documents/HR Sprint Repos/SDC/reviews/data_files/reviews.csv'
 delimiter ',' header csv;
