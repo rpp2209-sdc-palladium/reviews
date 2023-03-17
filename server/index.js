@@ -25,7 +25,6 @@ app.get('/reviews/', (req, res) => {
   var sort = req.query.sort;
   var product_id = req.query.product_id;
 
-  // call helper function with parameters and send the results back to the client
   getReviews(page, count, sort, product_id, (error, data) => {
     if (error) {
       res.sendStatus(400);
@@ -37,6 +36,17 @@ app.get('/reviews/', (req, res) => {
 
 // GET /reviews/meta
 // parameters: product_id
+app.get('/reviews/meta', (req, res) => {
+  var product_id = req.query.product_id;
+
+  getReviewsMeta(product_id, (error, data) => {
+    if (error) {
+      res.sendStatus(400);
+    } else {
+      res.send(data).status(200);
+    }
+  })
+});
 
 // POST /reviews
 // parameters: product_id, rating, summary, body, recommend, name, email, photos, characteristics
