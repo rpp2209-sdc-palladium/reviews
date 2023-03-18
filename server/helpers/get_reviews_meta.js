@@ -1,6 +1,6 @@
 const db = require('../schemas/postgres.js');
 
-var getReviewsMeta = (product_id) => {
+var getReviewsMeta = (product_id, callback) => {
   var characteristicIds = [];
   var characteristicNames = [];
   var resultingData = {
@@ -10,15 +10,23 @@ var getReviewsMeta = (product_id) => {
     "characteristics": {},
   }
 
-  // recommended? is 0 false and 1 true?
-
-  db.query(`SELECT rating FROM reviews WHERE product_id = ${product_id}`)
+  db.query(`SELECT rating, recommend FROM reviews WHERE product_id = ${product_id}`)
     .then((data) => {
       for (var i = 0; i < data.rows.length; i++) {
         if (resultingData.ratings[data.rows[i].rating]) {
           resultingData.ratings[data.rows[i].rating]++;
         } else {
           resultingData.ratings[data.rows[i].rating] = 1;
+        }
+        if (data.rows[i].recommend === 'true' && resultingData.recommended[1] === undefined) {
+          resultingData.recommended[1] = 1;
+        } else if (data.rows[i].recommend === 'true' && resultingData.recommended[1]) {
+          resultingData.recommended[1]++;
+        }
+        if (data.rows[i].recommend === 'false' && resultingData.recommended[0] === undefined) {
+          resultingData.recommended[0] = 1;
+        } else if (data.rows[i].recommend === 'false' && resultingData.recommended[0]) {
+          resultingData.recommended[0]++;
         }
       }
       return db.query(`SELECT id, name_ FROM characteristics WHERE product_id = ${product_id}`)
@@ -32,7 +40,7 @@ var getReviewsMeta = (product_id) => {
       var averages = [];
       for (var i = 0; i < characteristicIds.length; i++) {
         var avg = new Promise((resolve, reject) => {
-          db.query(`select avg(value_) from characteristicsreviews where characteristic_id = ${characteristicIds[i]}`)
+          db.query(`SELECT AVG(value_) FROM characteristicsReviews where characteristic_id = ${characteristicIds[i]}`)
             .then((data) => {
               resolve(data);
             })
@@ -50,39 +58,11 @@ var getReviewsMeta = (product_id) => {
         var charName = characteristicNames[i];
         resultingData.characteristics[charName]["value"] = avg;
       }
+      return callback(null, resultingData);
+    })
+    .catch((error) => {
+      return callback(error);
     })
 };
 
 module.exports.getReviewsMeta = getReviewsMeta;
-
-
-
-
-
-// {
-//   "product_id": "2",
-//   "ratings": {
-//     2: 1,
-//     3: 1,
-//     4: 2,
-//     // ...
-//   },
-//   "recommended": {
-//     0: 5
-//     // ...
-//   },
-//   "characteristics": {
-//     "Size": {
-//       "id": 14,
-//       "value": "4.0000"
-//     },
-//     "Width": {
-//       "id": 15,
-//       "value": "3.5000"
-//     },
-//     "Comfort": {
-//       "id": 16,
-//       "value": "4.0000"
-//     },
-//     // ...
-// }
