@@ -58,8 +58,18 @@ app.put('/reviews/:review_id/helpful', (req, res) => {
   })
 });
 
-// PUT /reviews/:review_id/report
-// parameters: review_id
+
+app.put('/reviews/:review_id/report', (req, res) => {
+  var review_id = req.params.review_id;
+
+  putReviewsReport(review_id, (error) => {
+    if (error) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(204);
+    }
+  })
+});
 
 app.listen(3000, () => {
   console.log('Listening on port 3000!');
