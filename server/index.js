@@ -10,15 +10,11 @@ const { putReviewsReport } = require('./helpers/put_reviews_report.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.static(???))
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// GET /reviews/
-// parameters: page, count, sort, product_id
-// should NOT include any reported reviews
 app.get('/reviews/', (req, res) => {
   var page = req.query.page;
   var count = req.query.count;
@@ -34,8 +30,7 @@ app.get('/reviews/', (req, res) => {
   })
 });
 
-// GET /reviews/meta
-// parameters: product_id
+
 app.get('/reviews/meta', (req, res) => {
   var product_id = req.query.product_id;
 
@@ -51,8 +46,17 @@ app.get('/reviews/meta', (req, res) => {
 // POST /reviews
 // parameters: product_id, rating, summary, body, recommend, name, email, photos, characteristics
 
-// PUT /reviews/:review_id/helpful
-// parameters: review_id
+app.put('/reviews/:review_id/helpful', (req, res) => {
+  var review_id = req.params.review_id;
+
+  putReviewsHelpful(review_id, (error) => {
+    if (error) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(204);
+    }
+  })
+});
 
 // PUT /reviews/:review_id/report
 // parameters: review_id
