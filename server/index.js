@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-// const db = require('./schemas/postgres.js');
 const { getReviewsMeta } = require('./helpers/get_reviews_meta.js');
 const { getReviews } = require('./helpers/get_reviews.js');
 const { postReviews } = require('./helpers/post_reviews.js');
@@ -10,15 +9,11 @@ const { putReviewsReport } = require('./helpers/put_reviews_report.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// app.use(express.static(???))
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-// GET /reviews/
-// parameters: page, count, sort, product_id
-// should NOT include any reported reviews
 app.get('/reviews/', (req, res) => {
   var page = req.query.page;
   var count = req.query.count;
@@ -34,8 +29,6 @@ app.get('/reviews/', (req, res) => {
   })
 });
 
-// GET /reviews/meta
-// parameters: product_id
 app.get('/reviews/meta', (req, res) => {
   var product_id = req.query.product_id;
 
@@ -48,14 +41,52 @@ app.get('/reviews/meta', (req, res) => {
   })
 });
 
-// POST /reviews
-// parameters: product_id, rating, summary, body, recommend, name, email, photos, characteristics
+app.post('/reviews', (req, res) => {
 
-// PUT /reviews/:review_id/helpful
-// parameters: review_id
+  var details = {
+    product_id: req.body.product_id,
+    rating: req.body.rating,
+    summary: req.body.summary,
+    body: req.body.body,
+    recommend: req.body.recommend,
+    name: req.body.name,
+    email: req.body.email,
+    photos: req.body.photos,
+    characteristics: req.body.characteristics
+  }
 
-// PUT /reviews/:review_id/report
-// parameters: review_id
+  postReviews(details, (error) => {
+    if (error) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(201);
+    }
+  })
+});
+
+app.put('/reviews/:review_id/helpful', (req, res) => {
+  var review_id = req.params.review_id;
+
+  putReviewsHelpful(review_id, (error) => {
+    if (error) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(204);
+    }
+  })
+});
+
+app.put('/reviews/:review_id/report', (req, res) => {
+  var review_id = req.params.review_id;
+
+  putReviewsReport(review_id, (error) => {
+    if (error) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(204);
+    }
+  })
+});
 
 app.listen(3000, () => {
   console.log('Listening on port 3000!');

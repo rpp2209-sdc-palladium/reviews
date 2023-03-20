@@ -1,4 +1,4 @@
-CREATE TABLE reviews (
+CREATE TABLE practice (
   id SERIAL,
   product_id BIGINT NOT NULL,
   rating INT NOT NULL,
@@ -13,6 +13,6 @@ CREATE TABLE reviews (
   helpfulness INT NOT NULL
 );
 
-copy reviews
-from '/Users/maddiesime/Documents/HR Sprint Repos/SDC/reviews/data_files/reviews.csv'
+copy practice
+from '/Users/maddiesime/Documents/HR Sprint Repos/SDC/reviews/data_files/practice_data.csv'
 delimiter ',' header csv;

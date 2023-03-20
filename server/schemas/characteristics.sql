@@ -1,5 +1,5 @@
 CREATE TABLE characteristics (
-  id BIGINT PRIMARY KEY,
+  id SERIAL,
   product_id BIGINT NOT NULL,
   name_ VARCHAR NOT NULL
 );
