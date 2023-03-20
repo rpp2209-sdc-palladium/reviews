@@ -1,5 +1,5 @@
 CREATE TABLE reviews (
-  id BIGINT PRIMARY KEY,
+  id SERIAL,
   product_id BIGINT NOT NULL,
   rating INT NOT NULL,
   date_ VARCHAR NOT NULL,

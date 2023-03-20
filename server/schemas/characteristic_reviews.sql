@@ -1,5 +1,5 @@
 CREATE TABLE characteristicsReviews (
-  id BIGINT PRIMARY KEY,
+  id SERIAL,
   characteristic_id BIGINT NOT NULL,
   review_id BIGINT NOT NULL,
   value_ INT NOT NULL

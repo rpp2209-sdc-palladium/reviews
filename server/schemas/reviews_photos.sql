@@ -1,5 +1,5 @@
 CREATE TABLE reviewsPhotos (
-  id BIGINT PRIMARY KEY,
+  id SERIAL,
   review_id BIGINT NOT NULL,
   url_ VARCHAR NOT NULL
 );

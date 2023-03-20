@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-// const db = require('./schemas/postgres.js');
 const { getReviewsMeta } = require('./helpers/get_reviews_meta.js');
 const { getReviews } = require('./helpers/get_reviews.js');
 const { postReviews } = require('./helpers/post_reviews.js');
@@ -30,7 +29,6 @@ app.get('/reviews/', (req, res) => {
   })
 });
 
-
 app.get('/reviews/meta', (req, res) => {
   var product_id = req.query.product_id;
 
@@ -43,8 +41,28 @@ app.get('/reviews/meta', (req, res) => {
   })
 });
 
-// POST /reviews
-// parameters: product_id, rating, summary, body, recommend, name, email, photos, characteristics
+app.post('/reviews', (req, res) => {
+
+  var details = {
+    product_id: req.body.product_id,
+    rating: req.body.rating,
+    summary: req.body.summary,
+    body: req.body.body,
+    recommend: req.body.recommend,
+    name: req.body.name,
+    email: req.body.email,
+    photos: req.body.photos,
+    characteristics: req.body.characteristics
+  }
+
+  postReviews(details, (error) => {
+    if (error) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(201);
+    }
+  })
+});
 
 app.put('/reviews/:review_id/helpful', (req, res) => {
   var review_id = req.params.review_id;
@@ -57,7 +75,6 @@ app.put('/reviews/:review_id/helpful', (req, res) => {
     }
   })
 });
-
 
 app.put('/reviews/:review_id/report', (req, res) => {
   var review_id = req.params.review_id;
