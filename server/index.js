@@ -55,7 +55,7 @@ app.post('/reviews', (req, res) => {
     characteristics: req.body.characteristics
   }
 
-  postReviews(details, (error) => {
+  postReviews(details, (error, data) => {
     if (error) {
       res.sendStatus(400);
     } else {
@@ -88,6 +88,6 @@ app.put('/reviews/:review_id/report', (req, res) => {
   })
 });
 
-app.listen(3000, () => {
-  console.log('Listening on port 3000!');
+app.listen(3030, () => {
+  console.log('Listening on port 3030!');
 });
