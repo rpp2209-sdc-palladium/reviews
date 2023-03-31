@@ -1,6 +1,7 @@
-const db = require('../schemas/postgres.js');
+const db = require('../schemas/database_connections/postgres.js');
 
 var getReviews = (page, count, sort, product_id, callback) => {
+
   var count_ = Number(count);
   var page_ = Number(page);
 
@@ -18,8 +19,8 @@ var getReviews = (page, count, sort, product_id, callback) => {
   var reviewsQuery = [];
   var resultingData = {
     "product": product_id.toString(),
-    "page": Number(page),
-    "count": Number(count),
+    "page": page_,
+    "count": count_,
     "results": []
   }
 

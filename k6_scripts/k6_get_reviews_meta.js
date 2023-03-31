@@ -6,11 +6,11 @@ export const options = {
   scenarios: {
     constant_request_rate: {
       executor: 'constant-arrival-rate',
-      rate: 1,
+      rate: 5000,
       timeUnit: '1s',
       duration: '60s',
       preAllocatedVUs: 1,
-      maxVUs: 10
+      maxVUs: 1000
     }
   }
 };
@@ -25,5 +25,3 @@ export default function () {
 
   http.get(url.toString());
 };
-
-// experiment
