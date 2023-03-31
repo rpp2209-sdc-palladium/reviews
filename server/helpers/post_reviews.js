@@ -1,4 +1,4 @@
-const db = require('../schemas/postgres.js');
+const db = require('../schemas/database_connections/postgres.js');
 
 var postReviews = (details, callback) => {
 
