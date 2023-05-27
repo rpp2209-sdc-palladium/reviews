@@ -4,7 +4,7 @@ This project transforms the backend of the reviews feature for an E-commerce app
 
 Load balancing with NGINX was performed on the deployed AWS EC2 instance to support 1,400 requests per second
 
-
+<img title="FlowChart" src="./Photos/FlowChart.jpg">
 
 ##### For installation: npm install, followed by npm run server-dev
 
