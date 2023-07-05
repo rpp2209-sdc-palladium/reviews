@@ -1,4 +1,4 @@
-# Project Atelier Reviews Microservice
+# Atelier Reviews Microservice
 
 This project transforms the backend of the reviews feature for an E-commerce application from a monolith architecture to a microservice to increase scalability and improve fault isolation. The third-party API was discarded for this feature and replaced with an internal, RESTful API. This microservice was stress tested locally and remotely with tools like K6 and Loader.io and improvements were implemented based on metrics collected with New Relic.
 
